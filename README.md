@@ -15,4 +15,4 @@ Des weiteren befinden sich in diesem Ordner noch die Schaltpläne der Hardware, 
 -
 
 ## Lizenz
-Die Kantonsschule Alpenquai ist Inhaberin der Rechte dieser Maturaarbeit. Über jegliche Art von Weiterverwendung muss die Schulleitung der Kantonsschule Alpenquai informiert und um Erlaubnis gefragt werden.
+Die Kantonsschule Alpenquai ist Inhaberin der Rechte dieser Maturaarbeit. Über jegliche Arten von Weiterverwendung muss die Schulleitung der Kantonsschule Alpenquai informiert und um Erlaubnis gefragt werden.
