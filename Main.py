@@ -2,8 +2,6 @@
 # Jan Aebersold, 2019, Maturaarbeit
 #! Informations:
 #! -  muss als sudo(Administrator) ausgefuehrt werden
-#! -  Die Anschlüsse muessen Serial-Anschlüsse sein!
-
 
 #Bibliotheken
 import RPi.GPIO as GPIO
@@ -14,7 +12,7 @@ from picamera import PiCamera
 import math
 import time
 
-#Anschlüsse
+#Anschlüsse 
 US1TRIG = 9
 US1ECHO = 11
 US2TRIG = 7
@@ -24,13 +22,11 @@ ROT = 13
 GRUN = 19
 GELB = 6
 
-
-#initialcommands
+#Startbefehle
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 camera = PiCamera()
 camera.resolution = (3280, 2464)
-
 
 #Variabeln und Konstanten
 etime = 4
@@ -53,8 +49,6 @@ aktuell = [0,0,0,0,0,0]
 winkel = 79
 abstand = 0.88 #meter
 limit = 300 #zentimeter
-anpassung1 = 0
-anpassung2 = 0
 
 #KLassen
 class SENSOR1:
@@ -89,10 +83,10 @@ class SENSOR1:
 
       distanz1 = round(dauer*17150 + anpassung1) #Berechnung der Distanz
 
-      if distanz1 < 5 or distanz1 > 400: #Beurteilung ob Distanz in Reichweite
+      if distanz1 < 5 or distanz1 > 400: #Beurteilung ob Distanz in Reichweite liegt.
         distanz1 = 500
 
-      csvprint.data(distanz1, 0)
+      csvprint.data(distanz1, 0) #Wurden zur Fehlersuche benötigt.
       csvprint.data(uberhol1, 0)
 
       if (time.time()-emtime) >= etime and emtime !=0 and not uberhol2: #Hilft fehler zu Vermeiden
@@ -291,15 +285,19 @@ class CSVPRINT:
       writer.writerow({'DATUM': datetime.datetime.now().strftime('%y-%m-%d_%H:%M:%S'),'SENSOR1': s1, 'SENSOR2': s2})
 
 
-#some functions
+#Restliche Funktionen
 def foto():
+  #Verzörgerung, um das Fahrzeug in der Mitte des Blickfeldes abzulichten.
   time.sleep((math.tan(winkel)*aktuell[1])/aktuell[5])
+  #Auslösung des Fotos
   camera.capture(dirname + 'Fotos/'+ str(datetime.datetime.now().strftime('%y-%m-%d_%H:%M:%S'))+'.jpg')
+  #LED leuchtet rot, um über die Auslösung zu informieren.
   led.on(ROT)
   time.sleep(1)
   led.off(ROT)
 
 def aver(l):
+  #Errechnet den Mittelwert einer Liste
   return sum(l)/len(l)
 
 if __name__ == '__main__':
